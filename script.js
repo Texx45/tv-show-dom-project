@@ -1,9 +1,21 @@
-//You can edit ALL of the code here
+//! SELECTORS
 const renderContent = document.querySelector(".render-content");
+const form = document.getElementById("form");
+const search = document.getElementById("search");
 
+//! SEARCH BAR FUNCTIONALITY
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const searchEpisodes = search.value;
+  console.log(searchEpisodes); // returns value from search input
+  search.value = ""; // clears search value
+});
+
+//! SETUP FUNCTION TO RENDER INFO TO SCREEN
 function setup() {
   const allEpisodes = getAllEpisodes();
-  //! Loop through data and retrieve required data
+  //? Loop through data and retrieve required data
   for (episode in allEpisodes) {
     console.log(allEpisodes[episode]);
 
@@ -40,5 +52,7 @@ function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 }
+
+//! WORK OUT SEARCH FUNCTIONALITY
 
 window.onload = setup;

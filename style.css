@@ -27,8 +27,13 @@ header {
 }
 
 .search {
+  font-size: 1rem;
+  font-family: "poppins", sans-serif;
+  margin: 0;
   background-color: transparent;
   border: 2px solid var(--primary-color);
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .search::placeholder {
@@ -36,6 +41,7 @@ header {
 }
 
 .search:focus {
+  color: white;
   outline: none;
   background-color: var(--primary-color);
 }
@@ -101,4 +107,13 @@ header {
 
 .movie:hover .summary {
   transform: translateY(0);
+}
+
+footer a {
+  color: #fff;
+  margin: 2rem 0rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  background-color: var(--secondary-color);
 }
