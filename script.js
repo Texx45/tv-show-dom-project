@@ -2,13 +2,15 @@
 const renderContent = document.querySelector(".render-content");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
+
 let allEpisodes = [];
 
 //! SEARCH BAR FUNCTIONALITY
 
 form.addEventListener("input", (e) => {
   e.preventDefault();
-  const searchEpisodes = search.value;
+  const searchEpisodes = search.value.toLowerCase();
+  console.log("search Episodes:", searchEpisodes.toLowerCase());
   filterSearchResults(allEpisodes, searchEpisodes);
 });
 
@@ -16,11 +18,11 @@ form.addEventListener("input", (e) => {
 const filterSearchResults = (arrayOfEpisodes, searchInput) => {
   const filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
-      episode.summary.includes(searchInput) ||
-      episode.name.includes(searchInput)
+      episode.summary.toLowerCase().includes(searchInput) ||
+      episode.name.toLowerCase().includes(searchInput)
     );
   });
-  console.log(filteredEpisodes);
+  console.log("filtered Episodes:", filteredEpisodes);
 
   renderCard(filteredEpisodes);
 };
@@ -39,6 +41,7 @@ const renderCard = (array) => {
     // console.log(episode.name);
 
     let { name, number, season, image, summary } = episode;
+    S;
 
     number < 10 ? (number = `0${number}`) : (number = `${number}`);
 
