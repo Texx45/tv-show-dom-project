@@ -2,27 +2,36 @@
 const renderContent = document.querySelector(".render-content");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
+const numberOfFilteredEpisodes = document.querySelector(".filtered-episodes");
+const totalNumberOfEpisodes = document.querySelector(".total-episodes");
 
 let allEpisodes = [];
+let filteredEpisodes = [];
 
 //! SEARCH BAR FUNCTIONALITY
-
+//* todo - Search filter needs to work with toLowerCase() & trim()
 form.addEventListener("input", (e) => {
   e.preventDefault();
-  const searchEpisodes = search.value.toLowerCase();
-  console.log("search Episodes:", searchEpisodes.toLowerCase());
+  const searchEpisodes = search.value;
+  console.log("search Episodes:", searchEpisodes);
   filterSearchResults(allEpisodes, searchEpisodes);
 });
 
 //! FILTER FUNCTION
 const filterSearchResults = (arrayOfEpisodes, searchInput) => {
-  const filteredEpisodes = arrayOfEpisodes.filter((episode) => {
+  filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
-      episode.summary.toLowerCase().includes(searchInput) ||
-      episode.name.toLowerCase().includes(searchInput)
+      episode.summary.includes(searchInput) ||
+      episode.name.includes(searchInput)
     );
   });
-  console.log("filtered Episodes:", filteredEpisodes);
+
+  //! REFACTOR THIS 👇👇👇👇👇👇
+  if (numberOfFilteredEpisodes.length === allEpisodes.length) {
+    numberOfFilteredEpisodes.innerText = 73;
+  } else {
+    numberOfFilteredEpisodes.innerText = `${filteredEpisodes.length}`; // displays filtered number of episodes
+  }
 
   renderCard(filteredEpisodes);
 };
@@ -31,6 +40,9 @@ const filterSearchResults = (arrayOfEpisodes, searchInput) => {
 
 function setup() {
   allEpisodes = getAllEpisodes();
+  console.log("all Episodes in setup function:", allEpisodes);
+  totalNumberOfEpisodes.innerText = `${allEpisodes.length}`; // displays total number of episodes
+  numberOfFilteredEpisodes.innerText = `${allEpisodes.length}`;
   renderCard(allEpisodes);
 }
 
@@ -41,7 +53,6 @@ const renderCard = (array) => {
     // console.log(episode.name);
 
     let { name, number, season, image, summary } = episode;
-    S;
 
     number < 10 ? (number = `0${number}`) : (number = `${number}`);
 

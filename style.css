@@ -36,6 +36,15 @@ header {
   border-radius: 10px;
 }
 
+header h3 {
+  font-size: 1rem;
+  margin: 0;
+  margin-left: 10px;
+  padding: 5px;
+  letter-spacing: 0.7px;
+  font-weight: 600;
+}
+
 .search::placeholder {
   color: #7378c5;
 }
