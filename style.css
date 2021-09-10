@@ -47,7 +47,7 @@ header h3 {
 }
 
 .render-select {
-  border: 2px solid white;
+  border-radius: 50px;
 }
 
 .search::placeholder {

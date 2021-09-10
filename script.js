@@ -21,7 +21,7 @@ form.addEventListener("input", (e) => {
 });
 
 //! FILTER FUNCTION
-const filterSearchResults = (arrayOfEpisodes, searchInput) => {
+function filterSearchResults(arrayOfEpisodes, searchInput) {
   filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
       episode.summary.includes(searchInput) ||
@@ -31,30 +31,31 @@ const filterSearchResults = (arrayOfEpisodes, searchInput) => {
 
   //* REFACTOR THIS 👇👇👇👇👇👇
   if (numberOfFilteredEpisodes.length === allEpisodes.length) {
-    numberOfFilteredEpisodes.innerText = 73;
+    numberOfFilteredEpisodes.innerText = allEpisodes.length;
   } else {
     numberOfFilteredEpisodes.innerText = `${filteredEpisodes.length}`; // displays filtered number of episodes
   }
 
   renderCard(filteredEpisodes);
-};
-
-//! SELECT FUNCTION
-const testEpisodes = ["red", "blue", "green", "yellow", "pink", "brown"];
-
-function listOfEpisodesDropdown(testEpisodes) {
-  console.log(testEpisodes);
-  renderSelect.innerText = "Select";
-  renderSelect.appendChild(createSelect);
-
-  testEpisodes.forEach((selectEpisode) => {
-    let createOption = document.createElement("option"); // create option element
-    createSelect.appendChild(createOption); // append 'option' element to 'select' element
-    createOption.innerText = selectEpisode; // pass in colours from array to 'option' element
-  });
+  listOfEpisodesDropdown(filteredEpisodes);
 }
 
-listOfEpisodesDropdown(testEpisodes);
+//! SELECT FUNCTION
+
+function listOfEpisodesDropdown(filteredArray) {
+  createSelect.innerHTML = "";
+  // renderSelect.innerText = "Select";
+  // renderSelect.appendChild(createSelect);
+
+  filteredArray.forEach((selectEpisode) => {
+    let createOption = document.createElement("option"); // create option element
+    createOption.text = `${formatNumber(selectEpisode.season)} - ${formatNumber(
+      selectEpisode.number
+    )} ${selectEpisode.name}`; // pass in episodes from array to 'option' element
+    createSelect.appendChild(createOption); // append 'option' element to 'select' element
+  });
+  renderSelect.appendChild(createSelect);
+}
 
 //! SETUP FUNCTION
 
@@ -63,8 +64,13 @@ function setup() {
   console.log("all Episodes in setup function:", allEpisodes);
   totalNumberOfEpisodes.innerText = `${allEpisodes.length}`; // displays total number of episodes
   numberOfFilteredEpisodes.innerText = `${allEpisodes.length}`;
+  listOfEpisodesDropdown(allEpisodes);
 
   renderCard(allEpisodes);
+}
+
+function formatNumber(number) {
+  return number < 10 ? (number = `0${number}`) : (number = `${number}`);
 }
 
 //! RENDER FUNCTION (renders all cards to screen)
@@ -75,14 +81,12 @@ const renderCard = (array) => {
 
     let { name, number, season, image, summary } = episode;
 
-    number < 10 ? (number = `0${number}`) : (number = `${number}`);
-
-    season < 10 ? (season = `0${season}`) : (season = `${season}`);
-
     const createCard = document.createElement("div");
     createCard.innerHTML = `
         <div class="movie">
-          <div class="movie-episode-info">Season: ${season} - Episode: ${number}</div>
+          <div class="movie-episode-info">Season: ${formatNumber(
+            season
+          )} - Episode: ${formatNumber(number)}</div>
             <img
               src="${image.medium}"
               alt="${name}"
