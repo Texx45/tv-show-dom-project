@@ -4,6 +4,9 @@ const form = document.getElementById("form");
 const search = document.getElementById("search");
 const numberOfFilteredEpisodes = document.querySelector(".filtered-episodes");
 const totalNumberOfEpisodes = document.querySelector(".total-episodes");
+const renderSelect = document.querySelector(".render-select");
+const createSelect = document.createElement("select");
+const createParagraph = document.createElement("p");
 
 let allEpisodes = [];
 let filteredEpisodes = [];
@@ -26,7 +29,7 @@ const filterSearchResults = (arrayOfEpisodes, searchInput) => {
     );
   });
 
-  //! REFACTOR THIS 👇👇👇👇👇👇
+  //* REFACTOR THIS 👇👇👇👇👇👇
   if (numberOfFilteredEpisodes.length === allEpisodes.length) {
     numberOfFilteredEpisodes.innerText = 73;
   } else {
@@ -36,6 +39,23 @@ const filterSearchResults = (arrayOfEpisodes, searchInput) => {
   renderCard(filteredEpisodes);
 };
 
+//! SELECT FUNCTION
+const testEpisodes = ["red", "blue", "green", "yellow", "pink", "brown"];
+
+function listOfEpisodesDropdown(testEpisodes) {
+  console.log(testEpisodes);
+  renderSelect.innerText = "Select";
+  renderSelect.appendChild(createSelect);
+
+  testEpisodes.forEach((selectEpisode) => {
+    let createOption = document.createElement("option"); // create option element
+    createSelect.appendChild(createOption); // append 'option' element to 'select' element
+    createOption.innerText = selectEpisode; // pass in colours from array to 'option' element
+  });
+}
+
+listOfEpisodesDropdown(testEpisodes);
+
 //! SETUP FUNCTION
 
 function setup() {
@@ -43,6 +63,7 @@ function setup() {
   console.log("all Episodes in setup function:", allEpisodes);
   totalNumberOfEpisodes.innerText = `${allEpisodes.length}`; // displays total number of episodes
   numberOfFilteredEpisodes.innerText = `${allEpisodes.length}`;
+
   renderCard(allEpisodes);
 }
 
