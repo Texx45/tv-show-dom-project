@@ -7,15 +7,18 @@ const totalNumberOfEpisodes = document.querySelector(".total-episodes");
 const renderSelect = document.querySelector(".render-select");
 const createSelect = document.createElement("select");
 const createParagraph = document.createElement("p");
+const displayAllEpisodesButton = document.querySelector(".button");
 
 let allEpisodes = [];
 let filteredEpisodes = [];
+let selectedEpisode;
+let searchEpisodes;
 
+// **********  TODO - Get all filtered episodes and descriptions into lower case **********
 //! SEARCH BAR FUNCTIONALITY
-//* todo - Search filter needs to work with toLowerCase() & trim()
 form.addEventListener("input", (e) => {
   e.preventDefault();
-  const searchEpisodes = search.value;
+  searchEpisodes = search.value.toLowerCase();
   console.log("search Episodes:", searchEpisodes);
   filterSearchResults(allEpisodes, searchEpisodes);
 });
@@ -24,37 +27,47 @@ form.addEventListener("input", (e) => {
 function filterSearchResults(arrayOfEpisodes, searchInput) {
   filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
-      episode.summary.includes(searchInput) ||
-      episode.name.includes(searchInput)
+      episode.summary.toLowerCase().includes(searchInput) ||
+      episode.name.toLowerCase().includes(searchInput)
     );
   });
 
-  //* REFACTOR THIS 👇👇👇👇👇👇
-  if (numberOfFilteredEpisodes.length === allEpisodes.length) {
-    numberOfFilteredEpisodes.innerText = allEpisodes.length;
-  } else {
-    numberOfFilteredEpisodes.innerText = `${filteredEpisodes.length}`; // displays filtered number of episodes
-  }
+  numberOfFilteredEpisodes.length === allEpisodes.length
+    ? (numberOfFilteredEpisodes.innerText = allEpisodes.length)
+    : (numberOfFilteredEpisodes.innerText = `${filteredEpisodes.length}`);
 
   renderCard(filteredEpisodes);
   listOfEpisodesDropdown(filteredEpisodes);
 }
 
+//! DISPLAY ALL EPISODES BUTTON
+
+displayAllEpisodesButton.addEventListener("click", () => {
+  setup();
+});
+
 //! SELECT FUNCTION
 
 function listOfEpisodesDropdown(filteredArray) {
   createSelect.innerHTML = "";
-  // renderSelect.innerText = "Select";
+
   // renderSelect.appendChild(createSelect);
 
   filteredArray.forEach((selectEpisode) => {
     let createOption = document.createElement("option"); // create option element
-    createOption.text = `${formatNumber(selectEpisode.season)} - ${formatNumber(
-      selectEpisode.number
-    )} ${selectEpisode.name}`; // pass in episodes from array to 'option' element
+    createOption.text = `Season ${formatNumber(
+      selectEpisode.season
+    )}  Episode ${formatNumber(selectEpisode.number)} - ${selectEpisode.name}`; // pass in episodes from array to 'option' element
     createSelect.appendChild(createOption); // append 'option' element to 'select' element
   });
+
   renderSelect.appendChild(createSelect);
+  createSelect.addEventListener("change", (e) => {
+    selectedEpisode = e.target.value.split("-")[1].toLowerCase().trim();
+    filterSearchResults(allEpisodes, selectedEpisode); //todo GET THIS WORKING <----
+    // selectedEpisode = e.target.value.toLowerCase().split("-")[1].trim();
+    // console.log(selectedEpisode);
+  });
 }
 
 //! SETUP FUNCTION
