@@ -64,9 +64,7 @@ function listOfEpisodesDropdown(filteredArray) {
   renderSelect.appendChild(createSelect);
   createSelect.addEventListener("change", (e) => {
     selectedEpisode = e.target.value.split("-")[1].toLowerCase().trim();
-    filterSearchResults(allEpisodes, selectedEpisode); //todo GET THIS WORKING <----
-    // selectedEpisode = e.target.value.toLowerCase().split("-")[1].trim();
-    // console.log(selectedEpisode);
+    filterSearchResults(allEpisodes, selectedEpisode);
   });
 }
 
@@ -76,6 +74,7 @@ function setup() {
   allEpisodes = getAllEpisodes();
   console.log("all Episodes in setup function:", allEpisodes);
   totalNumberOfEpisodes.innerText = `${allEpisodes.length}`; // displays total number of episodes
+  // totalNumberOfEpisodesTest(allEpisodes); - REFACTOR
   numberOfFilteredEpisodes.innerText = `${allEpisodes.length}`;
   listOfEpisodesDropdown(allEpisodes);
 
@@ -115,8 +114,6 @@ const renderCard = (array) => {
 
         `;
     renderContent.appendChild(createCard);
-
-    // makePageForEpisodes(allEpisodes);
   });
 };
 
